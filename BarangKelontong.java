@@ -13,6 +13,7 @@ class Menu{
   public static int pilihan;
   public static int notambah;
   public static Barang baru;
+  public static String kakun;
   public static void home(){
     System.out.print("\n-:: BARANG KELONTONG ::-\n");
     System.out.print("1. Input Data\n");
@@ -55,9 +56,13 @@ class Menu{
     baru.dist = scan.next();
     System.out.print("Harga       : ");
     baru.harga = scan.nextInt();
-    System.out.print("Lagi? (y/t) :");
+    System.out.print("Lagi? (y/t) : ");
     char lagi = scan.next().charAt(0);
     return lagi;
+  }
+  public static void cari(){
+    System.out.print("Kata kunci pencarian : ");
+    kakun = scan.next();
   }
 }
 
@@ -147,7 +152,26 @@ class BarangKelontong{
       }
     }
   }
-  public static void main(String[] args) {
+  public static void cari(String kakun){
+    Barang tulong = awal;
+    int N = 1;
+    boolean tampilGakAda = true;
+    while(tulong!=null){
+      if(!tulong.nama.equals(kakun))
+        tulong = tulong.next;
+      else{
+        tampilGakAda = false;
+        System.out.print("=============================================\n");
+        System.out.print("Kode\tNama\tDistributor\tHarga\n");
+        System.out.print("=============================================\n");
+        System.out.print(tulong.kode+"\t"+tulong.nama+"\t"+tulong.dist+"\t\t"+tulong.harga+"\n");
+        break;
+      }
+    }
+    if(tampilGakAda)
+      System.out.print("Tidak dapat menemukan data yang dicari.\n");
+  }
+  public static void main(String[] ikutiAjaMas) {
     kosongkanList();
     int pilihan;
     do{
@@ -166,6 +190,9 @@ class BarangKelontong{
       else if(pilihan == 3){
         menu.tambah(banyakData);
         tambahDiManaSaja(menu.baru, menu.notambah);
+      }else if(pilihan == 4){
+        menu.cari();
+        cari(menu.kakun);
       }
     }while(pilihan != 7);
     System.out.print("Terima kasih dan sampai jumpa.\n");
