@@ -18,8 +18,10 @@ class Menu{
     System.out.print("1. Input Data\n");
     System.out.print("2. Lihat Data\n");
     System.out.print("3. Tambah Data\n");
-    System.out.print("4. Hapus Data\n");
-    System.out.print("6. Keluar\n");
+    System.out.print("4. Cari Data\n");
+    System.out.print("5. Edit Data\n");
+    System.out.print("6. Hapus Data\n");
+    System.out.print("7. Keluar\n");
     System.out.print("Masukkan pilihan: ");
     pilihan = scan.nextInt();
     System.out.print("\n");
@@ -108,18 +110,17 @@ class BarangKelontong{
     banyakData++;
   }
   public static void tambahDiManaSaja(Barang baru, int notambah){
-    if(notambah <= 1) tambahDepan(baru);
-    else if(notambah > banyakData) tambahBelakang(baru);
+    if(notambah <= 1) tambahDepan(baru);  //Tambah depan
+    else if(notambah > banyakData) tambahBelakang(baru); //Tambah belakang
     else{
       Barang tulong = awal;
       int n = 1;
-      while(n<notambah && tulong != akhir){
+      while(n<(notambah-1) && tulong != akhir){
         tulong = tulong.next;
-        System.out.print(tulong.nama+" "+banyakData+" "+notambah+" "+n+"\n");
         if (tulong.next == null) break;
         n++;
       }
-      baru = tulong.next;
+      baru.next = tulong.next;
       tulong.next = baru;
       banyakData++;
     }
@@ -166,7 +167,7 @@ class BarangKelontong{
         menu.tambah(banyakData);
         tambahDiManaSaja(menu.baru, menu.notambah);
       }
-    }while(pilihan != 6);
+    }while(pilihan != 7);
     System.out.print("Terima kasih dan sampai jumpa.\n");
   }
 }
