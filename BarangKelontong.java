@@ -61,7 +61,14 @@ class Menu{
     return lagi;
   }
   public static void cari(){
+    System.out.print("\n");
+    System.out.print("-:: BARANG KELONTONG ::-\n");
+    System.out.print(" :: CARI DATA       ::\n");
     System.out.print("Kata kunci pencarian : ");
+    kakun = scan.next();
+  }
+  public static void edit(){
+    System.out.print("Masukkan kode : ");
     kakun = scan.next();
   }
 }
@@ -71,6 +78,7 @@ class BarangKelontong{
   public static Menu menu     = new Menu();
   public static Barang awal;
   public static Barang akhir;
+  public static Barang buffer;
   public static int banyakData;
   public static void kosongkanList(){
     awal = null;
@@ -152,32 +160,56 @@ class BarangKelontong{
       }
     }
   }
-  public static void cari(String kakun){
+  public static boolean cari(String kakun){
     Barang tulong = awal;
-    int N = 1;
     boolean tampilGakAda = true;
     while(tulong!=null){
-      if(!tulong.nama.equals(kakun))
+      if(!tulong.kode.equals(kakun))
         tulong = tulong.next;
       else{
         tampilGakAda = false;
-        System.out.print("=============================================\n");
-        System.out.print("Kode\tNama\tDistributor\tHarga\n");
-        System.out.print("=============================================\n");
-        System.out.print(tulong.kode+"\t"+tulong.nama+"\t"+tulong.dist+"\t\t"+tulong.harga+"\n");
+        buffer = tulong;
         break;
       }
     }
     if(tampilGakAda)
-      System.out.print("Tidak dapat menemukan data yang dicari.\n");
+      System.out.print("Tidak ada data yang cocok dengan kata kunci.\n");
+    return tampilGakAda;
   }
-  public static void main(String[] ikutiAjaMas) {
+  public static void edit(String kakun){
+    boolean ketemu = !cari(kakun);
+    Barang tulong = awal;
+    if(ketemu){
+      Barang baru = new Barang();
+      System.out.print("\n--: MASUKKAN DATA :--\n");
+      System.out.print("Kode        : ");
+      baru.kode = scan.next();
+      System.out.print("Nama        : ");
+      baru.nama = scan.next();
+      System.out.print("Distributor : ");
+      baru.dist = scan.next();
+      System.out.print("Harga       : ");
+      baru.harga = scan.nextInt();
+      while(tulong!=null){
+        if(!tulong.nama.equals(kakun)){
+          tulong = tulong.next;
+        }else{
+          tulong.kode = baru.kode;
+          tulong.nama = baru.nama;
+          tulong.dist = baru.dist;
+          tulong.harga = baru.harga;
+          System.out.print("Data "+kakun+" berhasil diubah.\n");
+        }
+      }
+    }
+  }
+  public static void main(String[] ikutiAjaMas){
     kosongkanList();
     int pilihan;
     do{
       menu.home();
       pilihan = menu.pilihan;
-      if(pilihan == 1){
+      if(pilihan == 1){ // entri data
         kosongkanList();
         char lagi;
         do {
@@ -185,14 +217,28 @@ class BarangKelontong{
           tambahBelakang(menu.baru);
         }while(lagi == 'y' || lagi == 'Y');
       }
-      else if(pilihan == 2)
+      else if(pilihan == 2) // tampilkan data
         tampil();
-      else if(pilihan == 3){
+      else if(pilihan == 3){ // tambah data
         menu.tambah(banyakData);
         tambahDiManaSaja(menu.baru, menu.notambah);
-      }else if(pilihan == 4){
+      }else if(pilihan == 4){ // cari data
         menu.cari();
-        cari(menu.kakun);
+        if(!cari(menu.kakun)){
+          System.out.print("=============================================\n");
+          System.out.print("Kode\tNama\tDistributor\tHarga\n");
+          System.out.print("=============================================\n");
+          System.out.print(buffer.kode+"\t"+buffer.nama+"\t"+buffer.dist+"\t\t"+buffer.harga+"\n");
+          buffer = null;
+        }
+        menu.kakun = null;
+      }else if(pilihan == 5){ // edit data
+        System.out.print("\n");
+        System.out.print("-:: BARANG KELONTONG ::-\n");
+        System.out.print(" :: EDIT DATA        ::\n");
+        tampil();
+        menu.edit();
+        edit(menu.kakun);
       }
     }while(pilihan != 7);
     System.out.print("Terima kasih dan sampai jumpa.\n");
