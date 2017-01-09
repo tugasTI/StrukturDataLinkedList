@@ -204,6 +204,7 @@ class BarangKelontong{
           tulong.dist = baru.dist;
           tulong.harga = baru.harga;
           System.out.print("Data "+kakun+" berhasil diubah.\n");
+          break;
         }
       }
     }
