@@ -196,7 +196,7 @@ class BarangKelontong{
       System.out.print("Harga       : ");
       baru.harga = scan.nextInt();
       while(tulong!=null){
-        if(!tulong.nama.equals(kakun)){
+        if(!tulong.kode.equals(kakun)){
           tulong = tulong.next;
         }else{
           tulong.kode = baru.kode;
@@ -212,11 +212,11 @@ class BarangKelontong{
     boolean ketemu = !cari(kakun);
     Barang tulong = awal;
     if(ketemu){
-      if(tulong.nama.equals(kakun))
+      if(tulong.kode.equals(kakun))
         awal = awal.next;
       else{
         while(tulong.next!=null){
-          if(!tulong.next.nama.equals(kakun)){
+          if(!tulong.next.kode.equals(kakun)){
             tulong = tulong.next;
           }else if(tulong.next == akhir){
             tulong.next = null;

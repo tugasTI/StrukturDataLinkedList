@@ -1,9 +1,8 @@
-compile:
+cm:
 	javac BarangKelontong.java
 
-run:
+st:
 	java BarangKelontong
 
 all:
-	$(compile)
-	$(run)
+	$(cm)
