@@ -71,6 +71,10 @@ class Menu{
     System.out.print("Masukkan kode : ");
     kakun = scan.next();
   }
+  public static void hapus(){
+    System.out.print("Masukkan kode : ");
+    kakun = scan.next();
+  }
 }
 
 class BarangKelontong{
@@ -158,6 +162,7 @@ class BarangKelontong{
         tulong = tulong.next;
         N++;
       }
+      System.out.print("\n");
     }
   }
   public static boolean cari(String kakun){
@@ -203,6 +208,28 @@ class BarangKelontong{
       }
     }
   }
+  public static void hapus(String kakun){
+    boolean ketemu = !cari(kakun);
+    Barang tulong = awal;
+    if(ketemu){
+      if(tulong.nama.equals(kakun))
+        awal = awal.next;
+      else{
+        while(tulong.next!=null){
+          if(!tulong.next.nama.equals(kakun)){
+            tulong = tulong.next;
+          }else if(tulong.next == akhir){
+            tulong.next = null;
+            akhir = tulong.next;
+          }else{
+            tulong.next = tulong.next.next;
+          }
+        }
+      }
+      banyakData--;
+      System.out.print("Data "+kakun+" berhasil dihapus.\n");
+    }
+  }
   public static void main(String[] ikutiAjaMas){
     kosongkanList();
     int pilihan;
@@ -239,6 +266,13 @@ class BarangKelontong{
         tampil();
         menu.edit();
         edit(menu.kakun);
+      }else if(pilihan == 6){ // hapus data
+        System.out.print("\n");
+        System.out.print("-:: BARANG KELONTONG ::-\n");
+        System.out.print(" :: HAPUS DATA       ::\n");
+        tampil();
+        menu.hapus();
+        hapus(menu.kakun);
       }
     }while(pilihan != 7);
     System.out.print("Terima kasih dan sampai jumpa.\n");
